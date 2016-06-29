@@ -1,0 +1,23 @@
+{
+  "env": {
+    "region": "APP_REGION",
+    "displayName": "APP_NAME",
+    "shortdomain": "DOMAIN_NAME"
+  },
+  "nodes": [ 
+    {
+      "nodeType": "docker",
+      "nodeGroup": "cp",
+      "count": 1,
+      "fixedCloudlets": 1,
+      "flexibleCloudlets": 16,
+      "displayName": "APP_NAME",
+      "docker": {
+        "registry": {
+          "url": "REG_URL"
+        },
+        "image": "IMAGE_NAME:DOCKER_TAG"
+      }
+    }
+  ]
+}
