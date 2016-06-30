@@ -1,0 +1,73 @@
+{
+  "jpsType": "install",
+  "jpsVersion": "0.8",
+  "application": {
+    "name": "Payara Micro Cluster",
+    "homepage": "http://www.payara.fish/",
+    "description": "Autoscalable and Highly Available Payara Micro Cluster",
+    "env": {
+      "region": "default_hn_group_1",
+      "displayName": "dev_payaraCICD",
+      "shortdomain": "devpayaraCICD",
+      "HAZELCAST_GROUP": "CHANGE_ME",
+      "HAZELCAST_PASSWORD": "CHANGE_ME",
+      "VERT_SCALING": "true",
+      "topology": {
+        "nodes": [
+          {
+            "cloudlets": 16,
+            "count": 1,
+            "nodeType": "docker",
+            "nodeGroup": "cp",
+            "docker": {
+              "registry": {
+                "url": "node72669-private-reg.demo.jelastic.com:11113"
+              },
+              "image": "imagepayaracicd:latest",
+              "env": {
+                "region": "default_hn_group_1",
+                "displayName": "dev_payaraCICD",
+                "shortdomain": "devpayaraCICD",
+                "HAZELCAST_GROUP": "CHANGE_ME",
+                "HAZELCAST_PASSWORD": "CHANGE_ME",
+                "VERT_SCALING": "true"
+              },
+              "volumes": [
+                "/opt/payara-micro-wars",
+                "/opt/config",
+                "/var/log"
+              ]
+            }
+          }
+        ]
+      },
+      "onBeforeServiceScaleOut[nodeGroup:cp]": {
+        "call": "addClusterMembers"
+      },
+      "onAfterScaleIn[nodeGroup:cp]": {
+        "forEach(event.response.nodes)": {
+          "execCmd": {
+            "nodeGroup": "cp",
+            "commands": "/opt/bin/clusterManager.sh --removehost ${@i.intIP}"
+          }
+        }
+      }
+    },
+    "onInstall": {
+      "call": "addClusterMembers"
+    },
+    "procedures": [
+      {
+        "id": "addClusterMembers",
+        "onCall": {
+          "forEach(nodes.cp)": {
+            "execCmd": {
+              "nodeGroup": "cp",
+              "commands": "/opt/bin/clusterManager.sh --addhost ${@i.intIP}"
+            }
+          }
+        }
+      }
+    ]
+  }
+}
