@@ -21,7 +21,7 @@
             "nodeGroup": "cp",
             "docker": {
               "registry": {
-                "url": "node72669-private-reg.demo.jelastic.com:11113"
+                "url": "node77790-priv-reg.demo.jelastic.com:11007"
               },
               "image": "imagepayaracicd:latest",
               "env": {
