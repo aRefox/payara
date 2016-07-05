@@ -12,5 +12,5 @@ source /opt/bin/memoryConfig.sh
 
 [ ! -z "$VERT_SCALING" -a "$VERT_SCALING" != "false" -a "$VERT_SCALING" != "0" ] && JAVA_OPTS="$JAVA_OPTS -javaagent:/opt/lib/jelastic-gc-agent.jar=period=$GC_PERIOD,debug=$GC_DEBUG"
 
-java $JAVA_OPTS -jar /opt/payara-micro.jar --port $PORT --deploymentDir /opt/payara-micro-wars --hzConfigFile /opt/config/hazelcast.xml 
+java $JAVA_OPTS -jar /opt/payara-micro.jar --port $PORT --deploymentDir /opt/payara-micro-wars --hzConfigFile /opt/config/hazelcast.xml --deploy /opt/payara-micro-wars/helloworld.war
 
