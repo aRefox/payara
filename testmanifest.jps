@@ -13,12 +13,12 @@
       "count": 1,
       "nodeType": "docker",
       "nodeGroup": "cp",
-      "displayName": "APP_NAME",
+      "displayName": "dev_payaraCICD",
       "docker": {
         "registry": {
           "url": "node77790-priv-reg.demo.jelastic.com:11007"
         },
-        "image": "IMAGE_NAME:DOCKER_TAG",
+        "image": "imagepayaracicd:latest",
         "volumes": [
           "/opt/payara-micro-wars",
           "/opt/config",
