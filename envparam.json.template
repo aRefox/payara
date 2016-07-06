@@ -2,9 +2,12 @@
   "env": {
     "region": "APP_REGION",
     "displayName": "APP_NAME",
-    "shortdomain": "DOMAIN_NAME"
+    "shortdomain": "DOMAIN_NAME",
+    "HAZELCAST_GROUP": "CHANGE_ME",
+    "HAZELCAST_PASSWORD": "CHANGE_ME",
+    "VERT_SCALING": "true"
   },
-  "nodes": [ 
+  "nodes": [
     {
       "nodeType": "docker",
       "nodeGroup": "cp",
@@ -16,8 +19,40 @@
         "registry": {
           "url": "REG_URL"
         },
-        "image": "IMAGE_NAME:DOCKER_TAG"
-      }
+        "image": "IMAGE_NAME:DOCKER_TAG",
+        "volumes": [
+          "/opt/payara-micro-wars",
+          "/opt/config",
+          "/var/log"
+        ]
+      },
+      "onBeforeServiceScaleOut[nodeGroup:cp]": {
+        "call": "addClusterMembers"
+      },
+      "onAfterScaleIn[nodeGroup:cp]": {
+        "forEach(event.response.nodes)": {
+          "execCmd": {
+            "nodeGroup": "cp",
+            "commands": "/opt/bin/clusterManager.sh --removehost ${@i.intIP}"
+          }
+        }
+      },
+      "onInstall": {
+        "call": "addClusterMembers"
+      },
+      "procedures": [
+        {
+          "id": "addClusterMembers",
+          "onCall": {
+            "forEach(nodes.cp)": {
+              "execCmd": {
+                "nodeGroup": "cp",
+                "commands": "/opt/bin/clusterManager.sh --addhost ${@i.intIP}"
+              }
+            }
+          }
+        }
+      ]
     }
   ]
 }
