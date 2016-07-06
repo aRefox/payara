@@ -38,6 +38,6 @@ RUN cd /opt && wget $PAYARA_PKG -O $PKG_FILE_NAME
 RUN mkdir -p /opt/payara-micro-wars
 RUN chown -R payara:payara /opt
 # Set up payara user and the home directory for the user USER payara WORKDIR /opt
+ENTRYPOINT ["java", "-jar", "payara-micro.jar", "--deploymentDir", "/opt/payara-micro-wars"]
 ADD helloworld.war /opt/payara-micro-wars
-#ENTRYPOINT ["java", "-jar", "payara-micro.jar", "--deploymentDir", "/opt/payara-micro-wars"]
 CMD ["/start.sh"]
