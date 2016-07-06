@@ -16,7 +16,7 @@
  <plugin>
   <groupId>com.jelastic</groupId>
   <artifactId>jelastic-maven-plugin</artifactId>
-  <version>1.7</version>
+  <version>1.8</version>
   <configuration>
      <email>dev_user@example.com</email>
      <password>passw0rd</password>
