@@ -24,21 +24,7 @@
           "/opt/payara-micro-wars",
           "/opt/config",
           "/var/log"
-        ],
-        "volumeMounts": {
-          "/opt/payara-micro-wars": {
-            "sourcePath": "/data/opt/payara-micro-wars",
-            "sourceNodeId": "DATACONTAINER"
-          },
-          "/opt/config": {
-            "sourcePath": "/data/opt/config",
-            "sourceNodeId": "DATACONTAINER"
-          },
-          "/var/log": {
-            "sourcePath": "/data/var/log",
-            "sourceNodeId": "DATACONTAINER"
-          }
-        }
+        ]
       },
       "onBeforeServiceScaleOut[nodeGroup:cp]": {
         "call": "addClusterMembers"
